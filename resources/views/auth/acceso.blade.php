@@ -43,7 +43,7 @@ brand-section{
                             <h3 class="fw-bold text-primary">Iniciar Sesion</h3>
                             <p class="text-muted">Ingresa tus credenciales para acceder</p>
                         </div>
-                        <form id="frmAcceso" method="post" action="{{ route('login') }}">
+                        <form id="frmAcceso" method="POST" action="{{ route('login')}}">
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label fw-semibold">
@@ -52,7 +52,7 @@ brand-section{
                                 <input type="email"
                                        class="form-control form-control-lg @error('email') is-invalid @enderror"
                                        id="email"
-                                       nam="email"
+                                       name="email"
                                        value="{{ old('email')}}"
                                        placeholder="ejemplo@correo.com"
                                        required>
@@ -64,12 +64,17 @@ brand-section{
                                 <label for="password" class="form-label fw-semibold">
                                     <i class="bi bi-lock texte-primary">Constraseña</i>
                                 </label>
-                                <input type="password"
-                                       class="form-control form-control-lg @error('password') is-invalid @enderror"
-                                       id="password"
-                                       nam="password"
-                                       placeholder="Ingresa tu contraseña"
-                                       required>
+                                <div class="input-group">
+                                    <input type="password"
+                                        class="form-control form-control-lg @error('password') is-invalid @enderror"
+                                        id="password"
+                                        name="password"
+                                        placeholder="Ingresa tu contraseña"
+                                        required>
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
                                 @error('password')
                                       <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -108,6 +113,20 @@ brand-section{
 @endpush
 
 @push('JSOR')
+//Mostrar/ocultar contraseña
+$('#togglePassword').on("click", function(){
+    const passwordField = $("#password");
+    const passwordFieldType = passwordField.attr("type");
+    const toggleIcon = $(this).find('i');
+    if( passwordFieldType === "password" ){
+        passwordField.attr("type", "text");
+        toggleIcon.removeClass("bi-eye").addClass("bi-eye-slash");
+    }
+    else{
+        passwordField.attr("type", "password");
+        toggleIcon.removeClass("bi-eye-slash").addClass("bi-eye");
+    }
+});
 $("#frmAcceso").on("submit", function(e){
   e.preventDefault();
   cambiarEstadoBoton(true);
