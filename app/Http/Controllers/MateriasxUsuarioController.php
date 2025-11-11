@@ -78,3 +78,4 @@ class MateriasXUsuarioController extends Controller
         }
     }
 }
+
