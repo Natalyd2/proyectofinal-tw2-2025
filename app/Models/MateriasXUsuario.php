@@ -17,7 +17,7 @@ class MateriasXUsuario extends Model
          'users_id'
      ];
  
-     public function materias(){
+     public function materia(){
          return $this->belongsTo(Materia::class, 'materias_id');
      }  
       
