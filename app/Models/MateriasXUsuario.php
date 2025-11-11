@@ -26,7 +26,7 @@ class MateriasXUsuario extends Model
      } 
         
      public function calificaciones(){
-         return $this->belongsTo(Calificacion::class, 'materias_x_usuarios_id');
+         return $this->hasMany(Calificacion::class, 'materias_x_usuarios_id');
      }
  }
 

@@ -19,19 +19,19 @@
                         Gestionar Materias
                     </h2>
                     <p class="text-muted mb-0">
-                        Usuario: <strong> {{ $usuario->username }}</strong>
-                        <span class='badget bg-{{ $usuario->tipo === 'admin' ? 'danger' : ($usuario->tipo->tipo === 'profesor' ? 'success' : 'primary') }} ms-2'>
+                        Usuario: <strong> {{ $usuario->username }} </strong>
+                        <span class="badge bg-{{ $usuario->tipo->tipo === 'admin' ? 'danger' : ($usuario->tipo->tipo === 'profesor' ? 'success' : 'primary') }} ms-2">
                             {{ ucfirst($usuario->tipo->tipo) }}
                         </span>
-                        </p>
+                    </p>
                 </div>
                 <div>
-                    <button type=button class="btn btn-success me-2" data-bs-toggle='modal' data-bs-target='#modalAsignarMateria'>
-                         <i class="bi bi-plus-circle-fill me-1"></i>
-                         Asignar Materia
+                    <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#modalAsignarMateria">
+                        <i class="bi bi-plus-circle-fill me-1"></i>
+                        Asignar Materia
                     </button>
                     <a href="{{ route('usuarios.index') }}" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left-fill me-1"></i>
+                        <i class="bi bi-arrow-left me-1"></i>
                         Volver a Usuarios
                     </a>
                 </div>
@@ -46,7 +46,7 @@
                                 <tr>
                                     <th>ID Materia</th>
                                     <th>Nombre de la Materia</th>
-                                    <th>Promedio</th>
+                                    <th>Promedio</th>                                
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -57,20 +57,20 @@
                                     <td>{{ $asignacion->materia->nombre }}</td>
                                     <td>
                                         @if( $asignacion->promedio > 0 )
-                                        <span class="badget bg-{{ $asignacion->promedio >= 7 ? 'success' : ( $asignacion->promedio >= 5 ? 'warning' : 'danger' ) }} fs-6">
-                                            {{ $asignacion->promedio }}
-                                        </span>
+                                            <span class="badge bg-{{ $asignacion->promedio >= 7 ? 'success' : ( $asignacion->promedio >= 5 ? 'warning' : 'danger' ) }} fs-6">
+                                                {{ $asignacion->promedio }}
+                                            </span>
                                         @else
-                                        <span class="badget bg-secondary fs-6">Sin Calificaciones</span>
+                                            <span class="badge bg-secondary fs-6">Sin calificaciones</span>
                                         @endif
                                     </td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <!-- Botón Agregar Calificacion -->
+                                            <!-- Botón Agregar Calificación -->
                                             <button type="button" class="btn btn-sm btn-outline-success" 
-                                                    onclick="agregarCalificacion({{ $usuario->id, $asignacion->materia->id }})"
-                                                    title="Agregar calificacion">
-                                                <i class="bi bi-pencil-square"></i>
+                                                    onclick="agregarCalificacion({{ $usuario->id }}, {{ $asignacion->materia->id }})"
+                                                    title="Agregar calificación">
+                                                <i class="bi bi-plus-square"></i>
                                             </button>
                                             
                                             <!-- Botón Eliminar Materia -->
@@ -78,8 +78,7 @@
                                                     onclick="eliminarMateria({{ $asignacion->id }}, '{{ $asignacion->materia->nombre }}')"
                                                     title="Eliminar materia">
                                                 <i class="bi bi-trash"></i>
-                                            </button>  
-                                            @endif
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -93,56 +92,58 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalAsignarMateria" tabindex="-1" aria-labelledby="modalAsignarMateria" aria-hidden="true">
+<div class="modal fade" id="modalAsignarMateria" tabindex="-1" aria-labelledby="modalAsignarMateriaLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-header bg-success text-white">
-            <h5 class="modal-title" id="modalAsignarMateriaLabel">
-                <i class="bi bi-plus-circle me-2"></i>
-                Asignar Materia a {{ $usuario->username }}
-            </h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form id="formAsignarMateria">
-            @csrf
-            <div class="modal-body">
-                @if( $materiasDisponibles->count() > 0 )
-                   <div class="mb-3">
-                       <label for="materia_id" class="form-label fw-semibold">
-                            <i class="bi bi-book-text-primary me-1"></i>
-                            Seleccionar Materia <span class="text-danger">*</span>
-                       </label>
-                       <select class="form-select" id="materia_id" name="materia_id" required>
-                             <option value="">-- Seleccionar Materia --</option>
-                             @foreach( $materiasDisponibles as $materia )
-                                  <option value="{{ $materia_id }}">{{ $materia->nombre }}</option>
-                             @endforeach
-                       </select>
-                       <div class="invalid-feedback"></div>
-                   </div>
-                   <div class="alert alert-info">
-                    <i class="bi bi-info-circle me-2"></i>
-                    <strong>Informacion:</strong>
-                    Solo se muestran las materias que no estan asignadas a este usuario.
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="modalAsignarMateriaLabel">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    Asignar Materia a {{ $usuario->username }}
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="formAsignarMateria">
+                @csrf
+                <div class="modal-body">
+                    @if( $materiasDisponibles->count() > 0 )
+                        <div class="mb-3">
+                            <label for="materia_id" class="form-label fw-semibold">
+                                <i class="bi bi-book text-primary me-1"></i>
+                                Seleccionar Materia <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select" id="materia_id" name="materia_id" required>
+                                <option value="">-- Seleccionar materia --</option>
+                                @foreach( $materiasDisponibles as $materia )
+                                    <option value="{{ $materia->id }}">{{ $materia->nombre }}</option>
+                                @endforeach
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle me-2"></i>
+                            <strong>Información:</strong>
+                             Solo se muestran las materias que no están asignadas a este usuario.
+                        </div>
+                    @else
+                        <div class="alert alert-info">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            <strong>Sin materias disponibles:</strong>
+                             Todas las materias ya están asignadas a este usuario o no hay materias creadas en el sistema.
+                        </div>
+                    @endif
                 </div>
-                @else
-                    <div class="alert alert-info">
-                        <i class="bi bi-exclamation-triangle me-2"></i>
-                        <strong>Sin materias disponibles:</strong>
-                        Todas las materias ya estan asignadas a este usuario o no hay materias creadas en el sistema.
-                    </div>
-                @endif
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="bi bi-x-circle me-1"></i>
-                    Cancelar
-                </button>
-                <button type="submit" class="btn btn-success">
-                    <i class="bi bi-check-circle me-1"></i>
-                    Asignar Materia
-                </button>
-            </div>
-        </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-1"></i>
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="bi bi-check-circle me-1"></i>
+                        Asignar Materia
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 @endsection
@@ -154,8 +155,7 @@
 
 <script>
     function agregarCalificacion(usuarioId, materiaId){
-        // Redirigir a la página de edición
-        //window.location.href = `{{ route('usuarios.index') }}/${id}/edit`;
+        window.location.href = `{{ url('materiasxusuario') }}/${usuarioId}/materia/${materiaId}/calificaciones`;
     }
     
     function eliminarMateria(asignacionId, nombreMateria){
@@ -173,7 +173,7 @@
                 // Crear formulario para eliminar
                 const form = $("<form>", {
                     "method": "POST",
-                    "action": `{{ url('materiasxusuario') }}/${asignacionId}/desasignar`
+                    'action': `{{ url('materiasxusuario') }}/${asignacionId}/desasignar`
                 });
                 
                 form.append($("<input>", {
