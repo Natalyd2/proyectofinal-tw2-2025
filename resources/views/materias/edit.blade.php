@@ -79,7 +79,7 @@
                                 </div>
                                 <!-- Ejemplos sugeridos -->
                                 <div class="mb-4">
-                                    <label class="form-label fw-semibold">Ejemplos comunes:</label>
+                                    <label class="form-label fw-semibold">Ejemplos comunes de materias</label>
                                     <div class="d-flex flex-wrap gap-2">
                                         <button type="button" class="btn btn-sm btn-outline-primary ejemplo-materia" data-materia="Matemáticas">
                                             Matemáticas
