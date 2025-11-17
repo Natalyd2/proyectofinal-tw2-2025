@@ -35,9 +35,9 @@
                         <table class="table table-striped table-hover" id="tablaTipos">
                             <thead class="table-primary">
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Tipo</th>
-                                    <th>Usuarios Asignados</th>
+                                    <th>Id de materia</th>
+                                    <th>Tipo de usuario</th>
+                                    <th>Usuarios asignados a la materia</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
